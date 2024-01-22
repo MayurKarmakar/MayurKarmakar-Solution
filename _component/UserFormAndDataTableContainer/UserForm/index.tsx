@@ -85,13 +85,12 @@ export default function UserForm(): JSX.Element {
     sex: yup.string().required("Please select your sex type"),
     mobile: yup
       .string()
-      .nullable()
-      .default("")
+      .default("N/A")
       .test(
         "mobile-validation",
         "Invalid mobile number",
         function (value, context) {
-          if (!value) return true;
+          if (!value || value === "N/A") return true;
           if (!phoneRegExpWithoutCountryCode.test(value)) {
             context.createError({ message: "Invalid indian phone number" });
             return false;
@@ -109,12 +108,17 @@ export default function UserForm(): JSX.Element {
 
           return true;
         }
-      ),
+      )
+      .transform((value) => {
+        // If no value for mobile field is entered then transform the value to "N/A"
+        return value || "N/A";
+      }),
     govtIdType: yup
       .string()
       .nullable()
       .default("N/A")
       .transform((value) => {
+        // If no value for govt id type field is entered then tranforming the value to N/A
         if (!value) return "N/A";
 
         return value;
@@ -174,49 +178,50 @@ export default function UserForm(): JSX.Element {
     //   ,
     address: yup
       .string()
-      .nullable()
+      .default("N/A")
       .transform((value) => {
         // If no value for address field is entered then tranforming the value to N/A
-        if (!value) return "N/A";
+        if (value === undefined || value === "") return "N/A";
 
         //Returning the value entered
         return value;
       }),
     state: yup
       .string()
-      .nullable()
+      .default("N/A")
       .transform((value) => {
         // If no value for state field is entered then tranforming the value to N/A
-        if (!value) return "N/A";
+        if (value === undefined || value === "") return "N/A";
 
         //Returning the value entered
         return value;
       }),
     city: yup
       .string()
-      .nullable()
+      .default("N/A")
       .transform((value) => {
+        console.log("value", value);
         // If no value for city field is entered then tranforming the value to N/A
-        if (!value) return "N/A";
+        if (value === undefined || value === "") return "N/A";
 
         //Returning the value entered
         return value;
       }),
     country: yup
       .string()
-      .nullable()
+      .default("N/A")
       .transform((value) => {
         // If no value for country field is entered then tranforming the value to N/A
-        if (!value) return "N/A";
+        if (value === undefined || value === "") return "N/A";
 
         //Returning the value entered
         return value;
       }),
     pincode: yup
       .string()
-      .nullable()
+      .default("N/A")
       .test("pincode-validation", function (value, context) {
-        if (!value) return true;
+        if (!value || value === "N/A") return true;
 
         if (!/^[1-9]\d{5}$/.test(value)) {
           context.createError({
@@ -228,7 +233,7 @@ export default function UserForm(): JSX.Element {
       })
       .transform((value) => {
         // If no value for pincode field is entered then tranforming the value to N/A
-        if (!value) return "N/A";
+        if (value === undefined || value === "") return "N/A";
 
         //Returning the value entered
         return value;
@@ -257,9 +262,16 @@ export default function UserForm(): JSX.Element {
     []
   );
 
-  const { handleSubmit, reset, control } = useForm({
+  const {
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(formSchema),
   });
+
+  console.log("form errors:: ", errors);
 
   const formSubmitHanlder = handleSubmit((data) => {
     if (currentForm === "USER_DETAILS") {
