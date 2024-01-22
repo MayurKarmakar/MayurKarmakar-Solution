@@ -43,13 +43,17 @@ Follow these steps to set up and run the app using `pnpm`:
 
 2. Install pnpm:
     If you don't have pnpm installed globally, you can install it using:
+    ```bash
     npm install -g pnpm
 
 2. Navigate to the project directory:
+    ```bash
     cd onito-react-challenge
 
 3. Install dependencies using pnpm:
+    ```bash
     pnpm install
 
 4. Run the development server:
+    ```bash
     pnpm run dev
