@@ -86,7 +86,7 @@ export default function UserForm(): JSX.Element {
     mobile: yup
       .string()
       .nullable()
-      .default("N/A")
+      .default("")
       .test(
         "mobile-validation",
         "Invalid mobile number",
@@ -248,7 +248,6 @@ export default function UserForm(): JSX.Element {
             key: index.toString(),
           };
         });
-        console.log("countries:: ", countries);
         setCountryOptions(countryOptions);
       } catch (err) {
         console.debug("fetch countries error:: ", err);

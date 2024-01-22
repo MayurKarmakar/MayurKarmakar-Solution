@@ -96,18 +96,16 @@ export async function fetchCountries(searchTerm: string) {
  */
 
 export function getAgeFromDateString(date: string) {
-  const birthdateObj = new Date(date);
-  const currentDate = new Date();
+  const parts: string[] = date.split("/");
+  const day: number = parseInt(parts[0], 10);
+  const month: number = parseInt(parts[1], 10) - 1;
+  const year: number = parseInt(parts[2], 10);
 
-  let age = currentDate.getFullYear() - birthdateObj.getFullYear();
+  const now: Date = new Date();
+  const birthDate: Date = new Date(year, month, day);
 
-  if (
-    currentDate.getMonth() < birthdateObj.getMonth() ||
-    (currentDate.getMonth() === birthdateObj.getMonth() &&
-      currentDate.getDate() < birthdateObj.getDate())
-  ) {
-    age--;
-  }
+  const diff: number = now.getTime() - birthDate.getTime();
+  const age: number = Math.floor(diff / 31557600000);
 
   return age;
 }
