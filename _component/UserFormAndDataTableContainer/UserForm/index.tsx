@@ -284,7 +284,7 @@ export default function UserForm(): JSX.Element {
   });
 
   return (
-    <Card sx={{ maxWidth: "90%" }} variant="outlined">
+    <Card sx={{ maxWidth: "90%", minWidth: "60%" }} variant="outlined">
       <CardHeader title="Personal Details" />
       <form onSubmit={formSubmitHanlder}>
         <CardContent>
