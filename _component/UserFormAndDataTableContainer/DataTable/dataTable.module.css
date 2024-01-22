@@ -1,0 +1,10 @@
+.tableHeader {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  background: #b2d8d8;
+}
+
+.tableHeader:first-child {
+  border-left: 1px solid #dddddd;
+}
